@@ -1,0 +1,7 @@
+services:
+  group_gr_roles.permissions:
+    class: 'Drupal\group_gr_roles\Access\GroupGrPermissionHandler'
+    arguments: ['@module_handler', '@string_translation', '@controller_resolver', '@plugin.manager.group_content_enabler']
+  group_gr_roles.gr_membership_loader:
+    class: 'Drupal\group_gr_roles\GroupGrMembershipLoader'
+    arguments: ['@entity_type.manager', '@current_user']

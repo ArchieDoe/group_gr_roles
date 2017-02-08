@@ -1,0 +1,14 @@
+group_rg_roles.add_group_gr_role:
+  route_name: 'entity.group_gr_role.add_form'
+  title: 'Add group specific role'
+  appears_on:
+    - 'entity.group_gr_role.collection'
+
+group_rg_roles.add_member:
+  route_name: 'entity.group_content.add_form'
+  route_parameters:
+    plugin_id: 'group_gr_membership'
+  class: '\Drupal\group\Plugin\Menu\LocalAction\WithDestination'
+  title: 'Add Group Member'
+  appears_on:
+    - 'view.group_members.page_1'

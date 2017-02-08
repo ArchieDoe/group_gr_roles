@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * @param array $entity_types
+ */
+function group_gr_roles_entity_type_build(array &$entity_types) {
+  // Default group implementation doesn't allow us to set our own role and group
+  // content storage controllers or membership loader. Replacing with custom class
+  // which is 99% copy but with ability to set custom ones.
+
+  // I don't want to create separate entity type because logically group
+  // entity type works perfectly for us, but those small things are not.
+  $entity_types['group']->setClass('Drupal\group_gr_roles\Entity\Group');
+}
+
+/**
+ * Implements hook_entity_field_access().
+ *
+ * {@inheritdoc}
+ *
+ * @todo Move this to a form controller so we can hide the field if it has no
+ *       options available to it?
+ */
+function group_gr_roles_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
+  // We only care about the group roles field for now.
+  if ($field_definition->getName() != 'group_gr_roles') {
+    return AccessResult::neutral();
+  }
+
+  // Can't retrieve an entity from an empty item list.
+  if (!isset($items)) {
+    return AccessResult::neutral();
+  }
+
+  /** @var \Drupal\group\Entity\GroupContent $group_content */
+  $group_content = $items->getEntity();
+  $group = $group_content->getGroup();
+
+  // Just to be safe, let's check the plugin ID.
+  if ($group_content->getContentPlugin()->getPluginId() == 'group_gr_membership') {
+    // Only group administrators should be able to change the membership roles.
+    return AccessResult::forbiddenIf(!$group->hasPermission('administer members', $account));
+  }
+
+  // Don't show the field if the plugin ID didn't match.
+  return AccessResult::forbidden();
+}

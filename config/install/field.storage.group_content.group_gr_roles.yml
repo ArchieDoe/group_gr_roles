@@ -1,0 +1,20 @@
+langcode: 'en'
+status: TRUE
+dependencies:
+  module:
+    - 'group'
+    - 'group_gr_roles'
+    - 'options'
+id: 'group_content.group_gr_roles'
+field_name: 'group_gr_roles'
+entity_type: 'group_content'
+type: 'entity_reference'
+settings:
+  target_type: 'group_gr_role'
+module: 'core'
+locked: TRUE
+cardinality: -1
+translatable: FALSE
+indexes: {}
+persist_with_no_fields: TRUE
+custom_storage: FALSE

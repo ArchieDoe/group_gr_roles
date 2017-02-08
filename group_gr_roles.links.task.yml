@@ -1,0 +1,11 @@
+group_gr_roles.roles:
+  title: 'Roles'
+  base_route: 'entity.group.canonical'
+  route_name: 'entity.group_gr_role.collection'
+  weight: 25
+
+group_gr_roles.permissions:
+  title: 'Permissions'
+  base_route: 'entity.group.canonical'
+  route_name: 'entity.group_gr_role.permissions_form'
+  weight: 25

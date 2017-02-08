@@ -1,0 +1,68 @@
+# Group role entity routes.
+entity.group_gr_role.collection:
+  path: '/group/{group}/roles'
+  defaults:
+    _entity_list: 'group_gr_role'
+    _title: 'Group roles'
+  requirements:
+    _permission: 'administer group'
+
+entity.group_gr_role.add_form:
+  path: '/group/{group}/roles/add'
+  defaults:
+    _controller: '\Drupal\group_gr_roles\Entity\Controller\GroupGrRoleController::add'
+    _title_callback: '\Drupal\group_gr_roles\Entity\Controller\GroupGrRoleController::addPageTitle'
+  requirements:
+    _permission: 'administer group'
+
+entity.group_gr_role.permissions_form:
+  path: '/group/{group}/permissions'
+  defaults:
+    _form: '\Drupal\group_gr_roles\Form\GroupPermissionsGroupSpecificForm'
+    _title: 'Edit group permissions'
+  requirements:
+    _permission: 'administer group'
+
+
+
+
+
+
+
+
+
+
+entity.group_gr_role.edit_form:
+  path: '/admin/group/types/3'
+  defaults:
+    _entity_form: 'group_role.edit'
+  requirements:
+    _permission: 'administer group'
+  options:
+    parameters:
+      group_type:
+        type: 'entity:group_type'
+
+entity.group_gr_role.delete_form:
+  path: '/admin/group/types/2'
+  defaults:
+    _entity_form: 'group_role.delete'
+    _title: 'Delete'
+  requirements:
+    _entity_access: 'group_role.delete'
+  options:
+    parameters:
+      group_type:
+        type: 'entity:group_type'
+
+#entity.group_gr_role.permissions_form:
+#  path: '/group/{group}/roles/{group_og_role}/permissions'
+#  defaults:
+#    _form: '\Drupal\group\Form\GroupPermissionsRoleSpecificForm'
+#    _title: 'Edit group role permissions'
+#  requirements:
+#    _permission: 'administer group'
+#  options:
+#      parameters:
+#        group_type:
+#          type: 'entity:group_type'
