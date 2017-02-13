@@ -1,0 +1,4 @@
+roles_inheritance_policy: FALSE
+group_role_entity_id: 'group_role'
+membership_plugin_id: 'group_membership'
+membership_loader_id: 'group.membership_loader'

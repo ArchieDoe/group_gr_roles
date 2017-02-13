@@ -1,5 +1,11 @@
 <?php
 
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Block\BlockPluginInterface;
+
 /**
  * Implements hook_entity_type_build().
  *
@@ -13,12 +19,39 @@ function group_gr_roles_entity_type_build(array &$entity_types) {
   // I don't want to create separate entity type because logically group
   // entity type works perfectly for us, but those small things are not.
   $entity_types['group']->setClass('Drupal\group_gr_roles\Entity\Group');
+
+  // Adding new property to the group type (again, it doesn't make sense to
+  // override entire entity type) to handle our settings. This is the wrong
+  // way, but this is how it's gonna be until we decide if we go as a
+  // submodule or a separate project.
+  $current_config_export = $entity_types['group_type']->get('config_export');
+  $current_config_export[] = 'roles_inheritance_policy';
+  $current_config_export[] = 'group_role_entity_id';
+  $current_config_export[] = 'membership_plugin_id';
+  $current_config_export[] = 'membership_loader_id';
+  $entity_types['group_type']->set('config_export', $current_config_export);
+
+  // We need some more settings on form, so changing form class here.
+  $entity_types['group_type']->setFormClass('add', 'Drupal\group_gr_roles\Entity\Form\GroupTypeForm');
+
+  // We need to extend group type functionality to have some more settings accessible
+  // from group type entity, so setting out class which is fully based on default one.
+  $entity_types['group_type']->setClass('Drupal\group_gr_roles\Entity\GroupType');
+}
+
+/**
+ * Implements hook_group_content_info_alter().
+ *
+ * @param $definitions
+ */
+function group_gr_roles_group_content_info_alter(&$definitions) {
+  // We don't want default membership to be enforced because we will give admin
+  // to select between our one and default one.
+  $definitions['group_membership']['enforced'] = FALSE;
 }
 
 /**
  * Implements hook_entity_field_access().
- *
- * {@inheritdoc}
  *
  * @todo Move this to a form controller so we can hide the field if it has no
  *       options available to it?

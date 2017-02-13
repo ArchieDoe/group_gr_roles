@@ -52,7 +52,8 @@ use Drupal\group_gr_roles\Entity\GroupGrRoleInterface;
  *     "group_type",
  *     "group_id",
  *     "permissions_ui",
- *     "permissions"
+ *     "permissions",
+ *     "parent_role_id"
  *   }
  * )
  */
@@ -64,6 +65,20 @@ class GroupGrRole extends GroupRole implements GroupGrRoleInterface {
    * @var string
    */
   protected $group_id;
+
+  /**
+   * Parent role.
+   *
+   * @var string
+   */
+  protected $parent_role_id;
+
+  /**
+   * Role inheritance state.
+   *
+   * @var string
+   */
+  protected $inherited;
 
   /**
    * {@inheritdoc}
@@ -80,6 +95,20 @@ class GroupGrRole extends GroupRole implements GroupGrRoleInterface {
     $uri_route_parameters['group'] = $this->getGroupId();
     $uri_route_parameters['group_gr_role'] = $this->id();
     return $uri_route_parameters;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isInherited() {
+    return (bool) $this->inherited;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getParentRoleId() {
+    return $this->parent_role_id;
   }
 
 }

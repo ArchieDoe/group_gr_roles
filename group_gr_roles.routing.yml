@@ -23,37 +23,20 @@ entity.group_gr_role.permissions_form:
   requirements:
     _permission: 'administer group'
 
-
-
-
-
-
-
-
-
-
 entity.group_gr_role.edit_form:
-  path: '/admin/group/types/3'
+  path: '/group/{group}/roles/manage/{group_gr_role}'
   defaults:
-    _entity_form: 'group_role.edit'
+    _entity_form: 'group_gr_role.edit'
   requirements:
     _permission: 'administer group'
-  options:
-    parameters:
-      group_type:
-        type: 'entity:group_type'
 
 entity.group_gr_role.delete_form:
-  path: '/admin/group/types/2'
+  path: '/group/{group}/roles/delete/{group_gr_role}'
   defaults:
-    _entity_form: 'group_role.delete'
+    _entity_form: 'group_gr_role.delete'
     _title: 'Delete'
   requirements:
-    _entity_access: 'group_role.delete'
-  options:
-    parameters:
-      group_type:
-        type: 'entity:group_type'
+    _entity_access: 'group_gr_role.delete'
 
 #entity.group_gr_role.permissions_form:
 #  path: '/group/{group}/roles/{group_og_role}/permissions'

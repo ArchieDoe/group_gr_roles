@@ -21,4 +21,5 @@ interface GroupGrInterface {
    * Gets the generic member role ID.
    */
   public function getMemberRoleId();
+
 }

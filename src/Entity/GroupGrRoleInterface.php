@@ -18,4 +18,19 @@ interface GroupGrRoleInterface extends GroupRoleInterface {
    */
   public function getGroupId();
 
+  /**
+   * Checks if role is inherited from parent group type role.
+   *
+   * @return bool
+   *   State of role (inherited or not).
+   */
+  public function isInherited();
+
+  /**
+   * Returns parent role ID.
+   *
+   * @return integer
+   *   Parent role.
+   */
+  public function getParentRoleId();
 }

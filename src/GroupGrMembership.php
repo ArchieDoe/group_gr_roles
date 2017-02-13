@@ -74,7 +74,7 @@ class GroupGrMembership implements CacheableDependencyInterface {
    */
   public function getRoles() {
     /** @var \Drupal\group\Entity\Storage\GroupRoleStorageInterface $group_role_storage */
-    $group_role_storage = \Drupal::entityTypeManager()->getStorage('group_role');
+    $group_role_storage = \Drupal::entityTypeManager()->getStorage('group_gr_role');
     return $group_role_storage->loadByUserAndGroup($this->getUser(), $this->getGroup());
   }
 
